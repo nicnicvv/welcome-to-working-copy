@@ -1,0 +1,23 @@
+s strings) would be to loop over its indexes and call getString on the array for each index:
+
+val my_json = result.get().obj()
+val items = my_json.getJSONArray("items")
+
+for (i in 0 until items.length()) {
+    val item = items.getString(i)
+    // use item
+}
+If you don't want to deal with indexes while iterating, you could wrap the iteration of a JSONArray into an extension function:
+
+fun JSONArray.forEachString(action: (String) -> Unit) {
+    for (i in 0 until length()) {
+        action(getString(i))
+    }
+}
+Which could then be used like this:
+
+val items = my_json.getJSONArray("items")
+items.forEachString { item ->
+    // use item
+}
+You could extend the JSONArray class with an iterator function as well if
